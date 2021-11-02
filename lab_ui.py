@@ -12,9 +12,9 @@ import service as s
 
 
 class Ui_MainWindow(object):
-
     back = None
     inputs = []
+
 
     def setupUi(self, MainWindow):
         self.back = s
@@ -432,6 +432,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.add_func()
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -494,23 +496,59 @@ class Ui_MainWindow(object):
         self.label_53.setText(_translate("MainWindow", "*X^2 +"))
         self.label_54.setText(_translate("MainWindow", "*X^3"))
         self.label_55.setText(_translate("MainWindow", "+"))
-        self.label_56.setText(_translate("MainWindow", "    d          +     c       *X  +    b         *X^2 +     a        *X^3"))
+        self.label_56.setText(
+            _translate("MainWindow", "    d          +     c       *X  +    b         *X^2 +     a        *X^3"))
         self.fill_def_values()
 
     def fill_def_values(self):
-        for i , value in enumerate(s.chars.start_values):
-            #print(i,value)
+        for i, value in enumerate(s.chars.start_values):
+            # print(i,value)
             self.inputs[i].setValue(value)
-            self.label_56.setText("F = [0 : " + str(self.back.chars.func_m.__len__()) + " ]")
+        self.label_56.setText("F = [0 : " + str(self.back.chars.func_m.__len__()) + " ]")
 
+    res = None
+    def calc(self):
+        Q1 = self.comboBox.value()
+        Q2 = self.comboBox_2.value()
+        Q3 = self.comboBox_3.value()
+        Q4 = self.comboBox_4.value()
+        Q5 = self.comboBox_5.value()
 
+        Q1k = list(range(4))
+        Q2k = list(range(4))
+        Q3k = list(range(4))
+        Q4k = list(range(4))
+        Q5k = list(range(4))
+        Q1k[0] = self.doubleSpinBox_34.value()
+        Q1k[1] = self.doubleSpinBox_33.value()
+        Q1k[2] = self.doubleSpinBox_29.value()
+        Q1k[3] = self.doubleSpinBox_28.value()
 
+        Q2k[0] = self.doubleSpinBox_36.value()
+        Q2k[1] = self.doubleSpinBox_35.value()
+        Q2k[2] = self.doubleSpinBox_30.value()
+        Q2k[3] = self.doubleSpinBox_31.value()
 
+        Q3k[0] = self.doubleSpinBox_39.value()
+        Q3k[1] = self.doubleSpinBox_37.value()
+        Q3k[2] = self.doubleSpinBox_32.value()
+        Q3k[3] = self.doubleSpinBox_38.value()
 
-        # def add_func(self):
-        #     self.learnNetwork.clicked.connect(self.network.learnNetwork)
-        #     self.saveNetwork.clicked.connect(self.network.saveNetwork)
-        #     self.loadImage.clicked.connect(self.getFileName)
+        Q4k[0] = self.doubleSpinBox_44.value()
+        Q4k[1] = self.doubleSpinBox_40.value()
+        Q4k[2] = self.doubleSpinBox_42.value()
+        Q4k[3] = self.doubleSpinBox_43.value()
+
+        Q5k[0] = self.doubleSpinBox_48.value()
+        Q5k[1] = self.doubleSpinBox_45.value()
+        Q5k[2] = self.doubleSpinBox_46.value()
+        Q5k[3] = self.doubleSpinBox_47.value()
+        self.back.chars.init_par(Q1,Q2,Q3,Q4,Q5,Q1k,Q2k,Q3k,Q4k,Q5k)
+        self.res = s.chars.calculate(values) # todo
+
+    def add_func(self):
+            self.pushButton.clicked.connect(self.calc)
+
 
 
 if __name__ == "__main__":

@@ -72,12 +72,12 @@ class CharacteristicFromExcel:
                 list(map(lambda x: x(t), res_b_fak))) - np.prod(list(map(lambda x: x(t), res_d_f))) * sum(
                 list(map(lambda x: x(t), res_d_fak))))
 
-    def init_par(self, init_par):
-        self.func_m['f4'] = lambda t: f4(t, init_par)
-        self.func_m['f10'] = lambda t: f10(t, init_par)
-        self.func_m['f37'] = lambda t: f37(t, init_par)
-        self.func_m['f78'] = lambda t: f78(t, init_par)
-        self.func_m['f88'] = lambda t: f88(t, init_par)
+    def init_par(self, Q1,Q2,Q3,Q4,Q5,Q1k,Q2k,Q3k,Q4k,Q5k):
+        self.func_m['f' + str(Q1)] = lambda t: Q_tempalte(t, Q1k)
+        self.func_m['f' + str(Q2)] = lambda t: Q_tempalte(t, Q2k)
+        self.func_m['f' + str(Q3)] = lambda t: Q_tempalte(t, Q3k)
+        self.func_m['f' + str(Q4)] = lambda t: Q_tempalte(t, Q4k)
+        self.func_m['f' + str(Q5)] = lambda t: Q_tempalte(t, Q5k)
 
     def calculate(self, init_params):
 
@@ -148,24 +148,24 @@ def make_radar_chart(name, stats, attribute_labels, plot_markers=[0, 0.2, 0.4, 0
     return plt.show()
 
 
-def f4(t, k):
-    return float(k['-f4-a-']) * np.array(t) ** 3 + float(k['-f4-c-'])
+# def f4(t, k):
+#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
+#
+#
+# def f10(t, k):
+#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
+#
+#
+# def f37(t, k):
+#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
+#
+#
+# def f78(t, k):
+#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
 
 
-def f10(t, k):
-    return float(k['-f10-a-']) * t + float(k['-f10-c-'])
-
-
-def f37(t, k):
-    return float(k['-f37-a-']) * t + float(k['-f37-c-'])
-
-
-def f78(t, k):
-    return float(k['-f78-a-']) * t ** 2 + float(k['-f78-b-']) * t + float(k['-f78-c-'])
-
-
-def f88(t, k):
-    return float(k['-f88-a-']) * t ** 2 + float(k['-f88-b-']) * t + float(k['-f88-c-'])
+def Q_tempalte(t, k):
+    return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
 
 
 def fak1(t):
