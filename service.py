@@ -106,6 +106,7 @@ class CharacteristicFromExcel:
         plt.xlim([0, 1])
         plt.ylim([0, 1])
         plt.legend(legend_labels, bbox_to_anchor=(1, 1))
+        plt.show()
         fig.tight_layout()
         fig.savefig('funcs.png')
 

@@ -549,11 +549,11 @@ class Ui_MainWindow(object):
         values = [n.value() for n in self.inputs]
 
         self.res = s.chars.calculate(values) # todo
+        s.chars.get_diag(self.doubleSpinBox_41.value())
+        s.chars.get_graphics()
 
     def add_func(self):
             self.pushButton.clicked.connect(self.calc)
-
-
 
 if __name__ == "__main__":
     import sys
