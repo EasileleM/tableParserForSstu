@@ -2,7 +2,7 @@ import pygsheets
 from string import Template
 
 AMOUNT_OF_VERTICES = 27
-AMOUNT_OF_FACS = 6
+AMOUNT_OF_FACS = 5
 # init functions here
 FUNCTIONS = [lambda x: 1] * AMOUNT_OF_VERTICES ** 2
 FUNCTIONS[0] = lambda x: x / 2
