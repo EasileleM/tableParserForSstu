@@ -3,9 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
-
 class CharacteristicFromExcel:
-
     def __init__(self, *args, **kwargs):
         if len(kwargs) == 0 or kwargs["excel"] is None:
             raise ValueError("excel is None")
@@ -32,7 +30,7 @@ class CharacteristicFromExcel:
                                                   char_val[self.char_faks_index:]))
 
         self.func_m = {}
-        self.fak_f = {'Fak1': fak1, 'Fak2': fak2, 'Fak3': fak3, 'Fak4': fak4, 'Fak5': fak5}
+        self.fak_f = {'FaK1': fak1, 'FaK2': fak2, 'FaK3': fak3, 'FaK4': fak4, 'FaK5': fak5}
         for i in self.chars:
             for f in (i.b + i.d):
                 name = 'f' + str(len(self.func_m.keys()) + 1)
@@ -87,7 +85,7 @@ class CharacteristicFromExcel:
             t = np.linspace(0, 1, 110)  # vector of time
             y0 = 1  # start value
             m_c = char.calculate(self.max_m[i], self.func_m, self.fak_f)
-            init_m_param = float(init_params['-m' + str(char.index) + '-'])
+            init_m_param = float(init_params[char.index - 1])
             y = odeint(m_c, init_m_param, t)  # solve eq.
             y = np.array(y).flatten()
             self.res[char.label] = y

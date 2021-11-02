@@ -18,6 +18,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         self.back = s
+        self.mainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 609)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -544,6 +545,9 @@ class Ui_MainWindow(object):
         Q5k[2] = self.doubleSpinBox_46.value()
         Q5k[3] = self.doubleSpinBox_47.value()
         self.back.chars.init_par(Q1,Q2,Q3,Q4,Q5,Q1k,Q2k,Q3k,Q4k,Q5k)
+
+        values = [n.value() for n in self.inputs]
+
         self.res = s.chars.calculate(values) # todo
 
     def add_func(self):
