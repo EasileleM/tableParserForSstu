@@ -168,11 +168,11 @@ def Q_tempalte(t, k):
 
 
 def fak1(t):
-    return -t ** 3 + 0.8
+    return -t ** 2 + 0.8
 
 
 def fak2(t):
-    return np.cos(1.5 * t) ** 2 / 2 + 0.2
+    return np.cos(1 * t) ** 2 / 2 + 0.1
 
 
 def fak3(t):
@@ -185,11 +185,11 @@ def fak3(t):
 
 
 def fak4(t):
-    return np.sin(9 * t) * np.sin(5 * t) * 0.3 + 0.5
+    return np.sin(6 * t) * np.sin(3 * t) * 0.5 + 0.5
 
 
 def fak5(t):
-    return np.sqrt(t) * 0.5 + 0.3
+    return np.sqrt(t) * 0.5 + 0.1
 
 
 excel_file_path = 'tableKush.xlsx'
