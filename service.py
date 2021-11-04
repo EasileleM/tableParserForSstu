@@ -101,7 +101,7 @@ class CharacteristicFromExcel:
         # рисуем график
         legend_labels = []
         for char in self.chars:
-            plt.plot(t, self.res[char.label], linewidth=3)
+            plt.plot(t, self.res[char.label], linewidth=2)
             legend_labels.append(char.label)
         plt.xlim([0, 1])
         plt.ylim([0, 1])
@@ -110,7 +110,7 @@ class CharacteristicFromExcel:
         fig.tight_layout()
         fig.savefig('funcs.png')
 
-    def get_diag(self, t):
+    def get_diag(self, t,filename):
         labels = list(self.res.keys())
 
         t_110 = np.linspace(0, 1, 110)
@@ -120,12 +120,12 @@ class CharacteristicFromExcel:
                 break
             res_index = i
         stats = [i[res_index] for i in self.res.values()]
-        make_radar_chart('T=' + str(t), stats, labels)
+        make_radar_chart('T=' + str(t),filename, stats, labels)
 
 
 
 
-def make_radar_chart(name, stats, attribute_labels, plot_markers=[0, 0.2, 0.4, 0.6, 0.8, 1],
+def make_radar_chart(name, filename, stats, attribute_labels, plot_markers=[0, 0.2, 0.4, 0.6, 0.8, 1],
                      plot_str_markers=["0", "0.2", "0.4", "0.6", "0.8", "1"]):
     labels = np.array(attribute_labels)
 
@@ -142,25 +142,9 @@ def make_radar_chart(name, stats, attribute_labels, plot_markers=[0, 0.2, 0.4, 0
     ax.set_title(name)
     ax.grid(True)
     plt.tight_layout
-    fig.savefig("diag.png")
+    fig.savefig(filename)
 
     return plt.show()
-
-
-# def f4(t, k):
-#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
-#
-#
-# def f10(t, k):
-#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
-#
-#
-# def f37(t, k):
-#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
-#
-#
-# def f78(t, k):
-#     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
 
 
 def Q_tempalte(t, k):
@@ -185,11 +169,11 @@ def fak3(t):
 
 
 def fak4(t):
-    return np.sin(6 * t) * np.sin(3 * t) * 0.5 + 0.5
+    return np.cos(6 * t) * np.sin(3 * t) * 0.5 + 0.5
 
 
 def fak5(t):
-    return np.sqrt(t) * 0.5 + 0.1
+    return np.sqrt(t) * 0.2 + 0.1
 
 
 excel_file_path = 'tableKush.xlsx'

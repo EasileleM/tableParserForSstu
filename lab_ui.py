@@ -1,4 +1,3 @@
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget
@@ -7,11 +6,10 @@ import service as s
 
 
 class AnotherWindow(QMainWindow):
-
     urla = ''
 
     def __init__(self, parent=None, url=None):
-        super(AnotherWindow,self).__init__(parent)
+        super(AnotherWindow, self).__init__(parent)
         self.acceptDrops()
         self.urla = url
         self.setWindowTitle("Image")
@@ -21,10 +19,6 @@ class AnotherWindow(QMainWindow):
         self.label.setPixmap(self.pixmap)
         self.label.resize(self.pixmap.width(),
                           self.pixmap.height())
-
-
-
-
 
 
 class Ui_MainWindow(object):
@@ -38,7 +32,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 609)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         self.label = QtWidgets.QLabel(self.centralwidget)
+
         self.label.setGeometry(QtCore.QRect(10, 10, 171, 16))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
@@ -244,31 +240,31 @@ class Ui_MainWindow(object):
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
 
-        self.comboBox = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.comboBox = QtWidgets.QSpinBox(self.centralwidget)
         self.comboBox.setMinimum(0)
         self.comboBox.setMaximum(1000)
         self.comboBox.setGeometry(QtCore.QRect(250, 60, 104, 26))
         self.comboBox.setObjectName("comboBox")
 
-        self.comboBox_2 = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.comboBox_2 = QtWidgets.QSpinBox(self.centralwidget)
         self.comboBox_2.setGeometry(QtCore.QRect(250, 90, 104, 26))
         self.comboBox_2.setObjectName("comboBox_2")
         self.comboBox_2.setMinimum(0)
         self.comboBox_2.setMaximum(1000)
 
-        self.comboBox_3 = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.comboBox_3 = QtWidgets.QSpinBox(self.centralwidget)
         self.comboBox_3.setGeometry(QtCore.QRect(250, 120, 104, 26))
         self.comboBox_3.setObjectName("comboBox_3")
         self.comboBox_3.setMinimum(0)
         self.comboBox_3.setMaximum(1000)
 
-        self.comboBox_4 = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.comboBox_4 = QtWidgets.QSpinBox(self.centralwidget)
         self.comboBox_4.setGeometry(QtCore.QRect(250, 150, 104, 26))
         self.comboBox_4.setObjectName("comboBox_4")
         self.comboBox_4.setMinimum(0)
         self.comboBox_4.setMaximum(1000)
 
-        self.comboBox_5 = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.comboBox_5 = QtWidgets.QSpinBox(self.centralwidget)
         self.comboBox_5.setGeometry(QtCore.QRect(250, 180, 104, 26))
         self.comboBox_5.setObjectName("comboBox_5")
         self.comboBox_5.setMinimum(0)
@@ -277,6 +273,27 @@ class Ui_MainWindow(object):
         self.label_29 = QtWidgets.QLabel(self.centralwidget)
         self.label_29.setGeometry(QtCore.QRect(350, 60, 16, 21))
         self.label_29.setObjectName("label_29")
+
+        self.label_F1 = QtWidgets.QLabel(self.centralwidget)
+        self.label_F1.setGeometry(QtCore.QRect(240, 60, 20, 20))
+        self.label_F1.setObjectName("labelF1")
+
+        self.label_F2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_F2.setGeometry(QtCore.QRect(240, 90, 20, 20))
+        self.label_F2.setObjectName("labelF2")
+
+        self.label_F3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_F3.setGeometry(QtCore.QRect(240, 120, 20, 20))
+        self.label_F3.setObjectName("labelF3")
+
+        self.label_F5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_F5.setGeometry(QtCore.QRect(240, 150, 20, 20))
+        self.label_F5.setObjectName("labelF5")
+
+        self.label_F4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_F4.setGeometry(QtCore.QRect(240, 180, 20, 20))
+        self.label_F4.setObjectName("labelF4")
+
         self.label_30 = QtWidgets.QLabel(self.centralwidget)
         self.label_30.setGeometry(QtCore.QRect(350, 90, 16, 21))
         self.label_30.setObjectName("label_30")
@@ -289,6 +306,7 @@ class Ui_MainWindow(object):
         self.label_33 = QtWidgets.QLabel(self.centralwidget)
         self.label_33.setGeometry(QtCore.QRect(350, 180, 16, 21))
         self.label_33.setObjectName("label_33")
+
         self.doubleSpinBox_28 = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.doubleSpinBox_28.setGeometry(QtCore.QRect(360, 60, 51, 21))
         self.doubleSpinBox_28.setObjectName("doubleSpinBox_28")
@@ -434,7 +452,7 @@ class Ui_MainWindow(object):
         self.label_55.setGeometry(QtCore.QRect(420, 180, 16, 21))
         self.label_55.setObjectName("label_55")
         self.label_56 = QtWidgets.QLabel(self.centralwidget)
-        self.label_56.setGeometry(QtCore.QRect(360, 30, 331, 16))
+        self.label_56.setGeometry(QtCore.QRect(260, 30, 400, 16))
         self.label_56.setObjectName("label_56")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -482,6 +500,12 @@ class Ui_MainWindow(object):
         self.label_27.setText(_translate("MainWindow", "u44 - Против настроек"))
         self.label_28.setText(_translate("MainWindow", "Уравнения"))
         self.label_29.setText(_translate("MainWindow", "="))
+        self.label_F1.setText('F')
+        self.label_F2.setText('F')
+        self.label_F3.setText('F')
+        self.label_F4.setText('F')
+        self.label_F5.setText('F')
+
         self.label_30.setText(_translate("MainWindow", "="))
         self.label_31.setText(_translate("MainWindow", "="))
         self.label_32.setText(_translate("MainWindow", "="))
@@ -520,10 +544,14 @@ class Ui_MainWindow(object):
         for i, value in enumerate(s.chars.start_values):
             # print(i,value)
             self.inputs[i].setValue(value)
-        self.label_56.setText("F = [0 : " + str(self.back.chars.func_m.__len__()) + " ]")
+        self.label_56.setText(
+            "F = [0 : " + str(self.back.chars.func_m.__len__()) + "]           d          +     c       *X  +  "
+                                                                  "  b         *X^2 +     a        "
+                                                                  "*X^3")
 
     res = None
     dialogs = list()
+
     def calc(self):
         Q1 = self.comboBox.value()
         Q2 = self.comboBox_2.value()
@@ -565,22 +593,26 @@ class Ui_MainWindow(object):
         values = [n.value() for n in self.inputs]
 
         self.res = s.chars.calculate(values)
-        s.chars.get_diag(self.doubleSpinBox_41.value())
+        s.chars.get_diag(self.doubleSpinBox_41.value(), 'diag.png')
+        s.chars.get_diag(0.0, 'diag0.png')
         s.chars.get_graphics()
         s.get_faks_image()
 
     def show_diag(self):
-        win = AnotherWindow(self.centralwidget,'diag.png')
+        win = AnotherWindow(self.centralwidget, 'diag.png')
         self.dialogs.append(win)
         win.show()
+        win2 = AnotherWindow(self.centralwidget, 'diag0.png')
+        self.dialogs.append(win)
+        win2.show()
 
     def show_fak(self):
-        win = AnotherWindow(self.centralwidget,'fak.png')
+        win = AnotherWindow(self.centralwidget, 'fak.png')
         self.dialogs.append(win)
         win.show()
 
     def show_funcs(self):
-        win = AnotherWindow(self.centralwidget,'funcs.png')
+        win = AnotherWindow(self.centralwidget, 'funcs.png')
         self.dialogs.append(win)
         win.show()
 
@@ -593,6 +625,7 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
