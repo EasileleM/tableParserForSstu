@@ -105,6 +105,8 @@ class CharacteristicFromExcel:
             legend_labels.append(char.label)
         plt.xlim([0, 1])
         plt.ylim([0, 1])
+        plt.xlabel('время')
+        plt.ylabel('значение характеристик')
         plt.legend(legend_labels, bbox_to_anchor=(1, 1))
         plt.show()
         fig.tight_layout()
@@ -119,17 +121,19 @@ class CharacteristicFromExcel:
             if t_i > t:
                 break
             res_index = i
+
+        start_stats = [i[0] for i in self.res.values()]
         stats = [i[res_index] for i in self.res.values()]
-        make_radar_chart('T=' + str(t),filename, stats, labels)
+        make_radar_chart('T=' + str(t),filename, start_stats, stats, labels)
 
 
 
 
-def make_radar_chart(name, filename, stats, attribute_labels, plot_markers=[0, 0.2, 0.4, 0.6, 0.8, 1],
-                     plot_str_markers=["0", "0.2", "0.4", "0.6", "0.8", "1"]):
+def make_radar_chart(name, filename, initialStats, stats, attribute_labels):
     labels = np.array(attribute_labels)
 
     angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
+    initialStats = np.concatenate((initialStats, [initialStats[0]]))
     stats = np.concatenate((stats, [stats[0]]))
     angles = np.concatenate((angles, [angles[0]]))
 
@@ -137,12 +141,13 @@ def make_radar_chart(name, filename, stats, attribute_labels, plot_markers=[0, 0
     ax = fig.add_subplot(111, polar=True)
     ax.plot(angles, stats, 'o-', linewidth=2)
     ax.fill(angles, stats, alpha=0.25)
+    ax.plot(angles, initialStats, 'o-', linewidth=2, color='r')
+    ax.fill(angles, initialStats, alpha=0.25, color='r')
     ax.set_thetagrids(angles[:-1] * 180 / np.pi, labels)
-    plt.yticks(plot_markers)
     ax.set_title(name)
     ax.grid(True)
     plt.tight_layout
-    fig.savefig(filename)
+    fig.savefig(filename, bbox_inches='tight')
 
     return plt.show()
 
@@ -196,9 +201,13 @@ def get_faks_image():
     plt.plot(t, fak4(t))
     plt.plot(t, fak5(t))
 
+    plt.xlabel('время')
+    plt.ylabel('значение характеристик')
+
     # показываем график
 
     plt.ylim([0, 1])
     plt.legend(['FaK1', 'FaK2', 'FaK3', 'FaK4', 'FaK5'], bbox_to_anchor=(1, 1))
+    
     fig[0].tight_layout()
     fig[0].savefig('fak.png')

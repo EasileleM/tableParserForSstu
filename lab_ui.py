@@ -594,7 +594,6 @@ class Ui_MainWindow(object):
 
         self.res = s.chars.calculate(values)
         s.chars.get_diag(self.doubleSpinBox_41.value(), 'diag.png')
-        s.chars.get_diag(0.0, 'diag0.png')
         s.chars.get_graphics()
         s.get_faks_image()
 
