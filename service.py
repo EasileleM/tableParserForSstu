@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
+labelMap = {'U1': 'Функц возможности','U2': 'пригодность','U3': 'правильность','U4': 'способность к взаи','U5': 'защищенность','U6': 'согласованность','U7': 'ошиб над','U8': 'несоответствия','U9': 'несовместимость','U10': 'ошибки при испол','U11': 'ошибки сети','U12': 'недостаток средс','U13': 'недостатки защиты','U14': 'несовме криптогр','U15': 'защита вирусов','U16': 'невыполнение функ','U17': 'надежность','U18': 'недостатоки докумен','U19': 'отсут файла комп','U20': 'отсутствие функц','U21': 'отсут интер','U22': 'противоречия','U23': 'проблемы докумен','U24': 'проблемы алгорит','U25': 'ошибки вычислен','U26': 'против настроек','U27': 'проблемы взаимо'}
+
 class CharacteristicFromExcel:
     def __init__(self, *args, **kwargs):
         if len(kwargs) == 0 or kwargs["excel"] is None:
@@ -40,7 +42,7 @@ class CharacteristicFromExcel:
     class Characteristic:
         def __init__(self, index, label, funcs, faks):
             self.index = index
-            self.label = label
+            self.label = labelMap[label]
             self.b = []
             self.b_fak = []
             self.d_fak = []
