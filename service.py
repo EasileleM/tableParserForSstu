@@ -93,7 +93,7 @@ class CharacteristicFromExcel:
         return self.res
 
     def get_graphics(self):
-        fig = plt.figure(figsize=(10, 5))
+        fig = plt.figure(figsize=(10, 7))
 
         # создаём область, в которой будет
         # - отображаться график
