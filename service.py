@@ -3,15 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
-labelMap = {'U1': 'Функц возможности','U2': 'пригодность','U3': 'правильность','U4': 'способность к взаи','U5': 'защищенность','U6': 'согласованность','U7': 'ошиб над','U8': 'несоответствия','U9': 'несовместимость','U10': 'ошибки при испол','U11': 'ошибки сети','U12': 'недостаток средс','U13': 'недостатки защиты','U14': 'несовме криптогр','U15': 'защита вирусов','U16': 'невыполнение функ','U17': 'надежность','U18': 'недостатоки докумен','U19': 'отсут файла комп','U20': 'отсутствие функц','U21': 'отсут интер','U22': 'противоречия','U23': 'проблемы докумен','U24': 'проблемы алгорит','U25': 'ошибки вычислен','U26': 'против настроек','U27': 'проблемы взаимо'}
+labelMap = {'U1': 'Общее количество ДТП','U2': 'Количество раненых','U3': 'Количество погибших','U4': 'Со стажем управления до 2 лет','U5': 'Со стажем управления от 5 до 10 лет','U6': 'Со стажем управления свыше 15 лет','U7': 'ДТП при нарушении ПДД хотя бы одним водителем','U8': 'ДТП из-за неудовлетворительного состояния дорог','U9': 'ДТП с участием водителя в алкогольном и/или наркотическом опьянении','U10': 'ДТП из-за неудовлетворительного дорожного покрытия (вода, лед, снег)','U11': 'ДТП на дорогах федерального значения','U12': 'ДТП на дорогах регионального или муниципального значения','U13': 'ДТП на дорогах местного значения','U14': 'ДТП на платных автомобильных дорогах','U15': 'ДТП на железнодорожных переездах'}
 
 class CharacteristicFromExcel:
     def __init__(self, *args, **kwargs):
         if len(kwargs) == 0 or kwargs["excel"] is None:
             raise ValueError("excel is None")
 
-        self.max_m = [1 for i in range(27)]
-        self.start_values = list(range(27))
+        self.max_m = [1 for i in range(15)]
+        self.start_values = list(range(15))
         self.res = {}
         self.init_chars = {}
         self.characteristics_labels = [col_name.replace('\n', '') for col_name in kwargs["excel"].columns[1:]]
@@ -22,9 +22,9 @@ class CharacteristicFromExcel:
         for index_row, excel_row in enumerate(excel_rows):
             name = excel_row[0]
             self.init_chars[name] = {}
-            self.start_values[index_row] = excel_row[33]
+            self.start_values[index_row] = excel_row[26]
 
-            for i, cell in enumerate(excel_row[1:32]):
+            for i, cell in enumerate(excel_row[1:25]):
                 self.init_chars[name][self.characteristics_labels[i]] = cell
 
             char_val = list(self.init_chars[name].values())
@@ -32,7 +32,7 @@ class CharacteristicFromExcel:
                                                   char_val[self.char_faks_index:]))
 
         self.func_m = {}
-        self.fak_f = {'FaK1': fak1, 'FaK2': fak2, 'FaK3': fak3, 'FaK4': fak4, 'FaK5': fak5}
+        self.fak_f = {'FaK1': fak1, 'FaK2': fak2, 'FaK3': fak3, 'FaK4': fak4, 'FaK5': fak5, 'FaK6': fak6, 'FaK7': fak7, 'FaK8': fak8, 'FaK9': fak9, 'FaK9': fak9}
         for i in self.chars:
             for f in (i.b + i.d):
                 name = 'f' + str(len(self.func_m.keys()) + 1)
@@ -61,7 +61,6 @@ class CharacteristicFromExcel:
                     self.d_fak.append("FaK" + str(ind + 1))
 
         def calculate(self, max_val, funcs, faks):
-            res = 0
             res_b_f = list(map(lambda x: funcs[self.funcs[x]], self.b))
             res_d_f = list(map(lambda x: funcs[self.funcs[x]], self.d))
 
@@ -81,11 +80,8 @@ class CharacteristicFromExcel:
 
     def calculate(self, init_params):
 
-        # m1 = 1 / self.max_m[0] * self.func_m['f4'] * ()
-
         for i, char in enumerate(self.chars):
             t = np.linspace(0, 1, 110)  # vector of time
-            y0 = 1  # start value
             m_c = char.calculate(self.max_m[i], self.func_m, self.fak_f)
             init_m_param = float(init_params[char.index - 1])
             y = odeint(m_c, init_m_param, t)  # solve eq.
@@ -182,6 +178,21 @@ def fak4(t):
 def fak5(t):
     return np.sqrt(t) * 0.2 + 0.1
 
+def fak6(t):
+    return np.sqrt(t) * 0.2 + 0.1
+
+def fak7(t):
+    return np.sqrt(t) * 0.2 + 0.1
+
+def fak8(t):
+    return np.sqrt(t) * 0.2 + 0.1
+
+def fak9(t):
+    return np.sqrt(t) * 0.2 + 0.1
+
+def fak10(t):
+    return np.sqrt(t) * 0.2 + 0.1
+
 
 excel_file_path = 'tableKush.xlsx'
 
@@ -202,6 +213,11 @@ def get_faks_image():
     plt.plot(t, fak3(t))
     plt.plot(t, fak4(t))
     plt.plot(t, fak5(t))
+    plt.plot(t, fak6(t))
+    plt.plot(t, fak7(t))
+    plt.plot(t, fak8(t))
+    plt.plot(t, fak9(t))
+    plt.plot(t, fak10(t))
 
     plt.xlabel('время')
     plt.ylabel('значение характеристик')
@@ -209,7 +225,7 @@ def get_faks_image():
     # показываем график
 
     plt.ylim([0, 1])
-    plt.legend(['FaK1', 'FaK2', 'FaK3', 'FaK4', 'FaK5'], bbox_to_anchor=(1, 1))
+    plt.legend(['FaK1', 'FaK2', 'FaK3', 'FaK4', 'FaK5', 'FaK6', 'FaK7', 'FaK8', 'FaK9', 'Fak10'], bbox_to_anchor=(1, 1))
     
     fig[0].tight_layout()
     fig[0].savefig('fak.png')
