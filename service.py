@@ -36,7 +36,7 @@ class CharacteristicFromExcel:
         if len(kwargs) == 0 or kwargs["excel"] is None:
             raise ValueError("excel is None")
 
-        self.max_m = [1 for i in range(27)]
+        self.max_m = [8 for i in range(27)]
         self.start_values = list(range(27))
         self.res = {}
         self.init_chars = {}
@@ -87,7 +87,6 @@ class CharacteristicFromExcel:
                     self.d_fak.append("FaK" + str(ind + 1))
 
         def calculate(self, max_val, funcs, faks):
-            res = 0
             res_b_f = list(map(lambda x: funcs[self.funcs[x]], self.b))
             res_d_f = list(map(lambda x: funcs[self.funcs[x]], self.d))
 
@@ -111,7 +110,6 @@ class CharacteristicFromExcel:
 
         for i, char in enumerate(self.chars):
             t = np.linspace(0, 1, 110)  # vector of time
-            y0 = 1  # start value
             m_c = char.calculate(self.max_m[i], self.func_m, self.fak_f)
             init_m_param = float(init_params[char.index - 1])
             y = odeint(m_c, init_m_param, t)  # solve eq.
@@ -120,7 +118,7 @@ class CharacteristicFromExcel:
 
         return self.res
 
-    def get_graphics(self):
+    def get_graphics(self, filename):
         fig = plt.figure(figsize=(10, 7))
 
         # создаём область, в которой будет
@@ -138,7 +136,7 @@ class CharacteristicFromExcel:
         plt.legend(legend_labels, bbox_to_anchor=(1, 1),prop={"size":7})
         plt.show()
         fig.tight_layout()
-        fig.savefig('funcs.png')
+        fig.savefig(filename)
 
     def get_diag(self, t,filename):
         labels = list(self.res.keys())
@@ -154,11 +152,10 @@ class CharacteristicFromExcel:
         stats = [i[res_index] for i in self.res.values()]
         make_radar_chart('T=' + str(t),filename, start_stats, stats, labels)
 
-
-
-
 def make_radar_chart(name, filename, initialStats, stats, attribute_labels):
     labels = np.array(attribute_labels)
+
+    labels = list(map(lambda label: '\n'.join(label.replace('\n', '').split(' ')), labels))
 
     angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
     initialStats = np.concatenate((initialStats, [initialStats[0]]))
@@ -166,6 +163,7 @@ def make_radar_chart(name, filename, initialStats, stats, attribute_labels):
     angles = np.concatenate((angles, [angles[0]]))
 
     fig = plt.figure(figsize=(8, 8))
+    plt.tight_layout()
     ax = fig.add_subplot(111, polar=True)
     ax.plot(angles, stats, 'o-', linewidth=2)
     ax.fill(angles, stats, alpha=0.25)
@@ -175,7 +173,6 @@ def make_radar_chart(name, filename, initialStats, stats, attribute_labels):
     ax.tick_params(labelsize=6)
     ax.set_title(name)
     ax.grid(True)
-    plt.tight_layout
     fig.savefig(filename, bbox_inches='tight')
 
     return plt.show()
@@ -184,16 +181,17 @@ def make_radar_chart(name, filename, initialStats, stats, attribute_labels):
 def Q_tempalte(t, k):
     return float(k[3]) * t ** 3 + k[2] * t ** 2 + float(k[1]) * t + float(k[0])
 
-
 def fak1(t):
-    return -t ** 2 + 0.8
+    return 0.3 * t + 0.4
 
 
 def fak2(t):
-    return np.cos(1 * t) ** 2 / 2 + 0.1
-
+    return 0.6 * t + 0.2
 
 def fak3(t):
+    return np.cos(t) / 2 + 0.1
+
+def fak4(t):
     res = np.where(t < 0, -1, t)
     res = np.where(t > 1, -1, res)
     res = np.where(t <= 1, 0.9, res)
@@ -201,13 +199,12 @@ def fak3(t):
     res = np.where(t <= 0.2, 0.5, res)
     return res
 
-
-def fak4(t):
-    return np.cos(6 * t) * np.sin(3 * t) * 0.5 + 0.5
-
-
 def fak5(t):
-    return np.sqrt(t) * 0.2 + 0.1
+    res = np.where(t <= 0.6, 0.6, t)
+    res = np.where(t < 0.3, t * 2, res)
+    res = np.where(t > 0.6, -5 * t + 3.6, res)
+    
+    return res
 
 
 excel_file_path = 'tableKush.xlsx'
@@ -231,7 +228,7 @@ def get_faks_image():
     plt.plot(t, fak5(t))
 
     plt.xlabel('время')
-    plt.ylabel('значение характеристик')
+    plt.ylabel('возмущения')
 
     # показываем график
 

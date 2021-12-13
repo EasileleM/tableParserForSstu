@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget
 
 import service as s
 
+times = 0
 
 class AnotherWindow(QMainWindow):
     urla = ''
@@ -620,8 +621,10 @@ class Ui_MainWindow(object):
         values = [n.value() for n in self.inputs]
 
         self.res = s.chars.calculate(values)
-        s.chars.get_diag(self.doubleSpinBox_41.value(), 'diag.png')
-        s.chars.get_graphics()
+        global times
+        times = times + 1
+        s.chars.get_diag(self.doubleSpinBox_41.value(), 'res/diag' + str(times) + '.png')
+        s.chars.get_graphics('res/funks' + str(times) + '.png')
         s.get_faks_image()
 
     def show_diag(self):
