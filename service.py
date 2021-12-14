@@ -169,44 +169,59 @@ def Q_tempalte(t, k):
 
 
 def fak1(t):
-    return -t ** 2 + 0.8
+    return 2 * t + 0.1
 
 
 def fak2(t):
-    return np.cos(1 * t) ** 2 / 2 + 0.1
+    res = np.where(t >= 0, 0.8, t)
+    res = np.where(t > 0.25, 0.6, res)
+    res = np.where(t > 0.6, 0.4, res)
+    res = np.where(t > 0.8, 0.15, res)
 
-
-def fak3(t):
-    res = np.where(t < 0, -1, t)
-    res = np.where(t > 1, -1, res)
-    res = np.where(t <= 1, 0.9, res)
-    res = np.where(t <= 0.7, 0.8, res)
-    res = np.where(t <= 0.2, 0.5, res)
     return res
 
+def fak3(t):
+    return np.cos(t * 10) / 3 + 0.35
 
 def fak4(t):
-    return np.cos(6 * t) * np.sin(3 * t) * 0.5 + 0.5
-
+    return  t / 3 + 0.3
 
 def fak5(t):
-    return np.sqrt(t) * 0.2 + 0.1
+    return np.cos(t * 5) / 6 + 0.2
 
 def fak6(t):
-    return np.sqrt(t) * 0.3 + 0.2
+    return np.exp(t) / 2 - 0.5
 
 def fak7(t):
-    return np.sqrt(t) * 0.5 - 0.4
+    res = np.where(t >= 0, 0.08, t)
+    res = np.where(t > 0.25, 0.17, res)
+    res = np.where(t > 0.45, 0.26, res)
+    res = np.where(t > 0.55, 0.38, res)
+    res = np.where(t > 0.70, 0.46, res)
+
+    return res
 
 def fak8(t):
-    return np.sqrt(t) ** 2 + 0.1
+    res = np.where(t >= 0, 0.05, t)
+    res = np.where(t > 0.15, 0.09, res)
+    res = np.where(t > 0.24, 0.15, res)
+    res = np.where(t > 0.60, 0.20, res)
+
+    return res
 
 def fak9(t):
-    return np.sqrt(t) ** 0.5 + 0.4
+    res = np.where(t >= 0, 0.1, t)
+    res = np.where(t > 0.15, 0.2, res)
+    res = np.where(t > 0.2, 0.24, res)
+    res = np.where(t > 0.43, 0.3, res)
+    res = np.where(t > 0.58, 0.34, res)
+    res = np.where(t > 0.73, 0.39, res)
+    res = np.where(t > 0.94, 0.5, res)
+
+    return res
 
 def fak10(t):
-    return np.sqrt(t) * 2 + 0.6
-
+    return 1 / (t + 1) - 0.2
 
 excel_file_path = 'tableKush.xlsx'
 
