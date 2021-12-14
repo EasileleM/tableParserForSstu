@@ -24,7 +24,7 @@ class CharacteristicFromExcel:
         if len(kwargs) == 0 or kwargs["excel"] is None:
             raise ValueError("excel is None")
 
-        self.max_m = [1 for i in range(15)]
+        self.max_m = [5 for i in range(15)]
         self.start_values = list(range(15))
         self.res = {}
         self.init_chars = {}
