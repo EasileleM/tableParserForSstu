@@ -19,6 +19,7 @@ labelMap = {'U1': 'Общее количество ДТП',
             'U14': 'ДТП на платных автомобильных дорогах',
             'U15': 'ДТП на железнодорожных переездах'}
 
+
 class CharacteristicFromExcel:
     def __init__(self, *args, **kwargs):
         if len(kwargs) == 0 or kwargs["excel"] is None:
@@ -46,7 +47,8 @@ class CharacteristicFromExcel:
                                                   char_val[self.char_faks_index:]))
 
         self.func_m = {}
-        self.fak_f = {'FaK1': fak1, 'FaK2': fak2, 'FaK3': fak3, 'FaK4': fak4, 'FaK5': fak5, 'FaK6': fak6, 'FaK7': fak7, 'FaK8': fak8, 'FaK9': fak9, 'FaK10': fak10}
+        self.fak_f = {'FaK1': fak1, 'FaK2': fak2, 'FaK3': fak3, 'FaK4': fak4, 'FaK5': fak5, 'FaK6': fak6, 'FaK7': fak7,
+                      'FaK8': fak8, 'FaK9': fak9, 'FaK10': fak10}
         for i in self.chars:
             for f in (i.b + i.d):
                 name = 'f' + str(len(self.func_m.keys()) + 1)
@@ -85,7 +87,7 @@ class CharacteristicFromExcel:
                 list(map(lambda x: x(t), res_b_fak))) - np.prod(list(map(lambda x: x(t), res_d_f))) * sum(
                 list(map(lambda x: x(t), res_d_fak))))
 
-    def init_par(self, Q1,Q2,Q3,Q4,Q5,Q1k,Q2k,Q3k,Q4k,Q5k):
+    def init_par(self, Q1, Q2, Q3, Q4, Q5, Q1k, Q2k, Q3k, Q4k, Q5k):
         self.func_m['f' + str(Q1)] = lambda t: Q_tempalte(t, Q1k)
         self.func_m['f' + str(Q2)] = lambda t: Q_tempalte(t, Q2k)
         self.func_m['f' + str(Q3)] = lambda t: Q_tempalte(t, Q3k)
@@ -105,7 +107,7 @@ class CharacteristicFromExcel:
         return self.res
 
     def get_graphics(self):
-        fig = plt.figure(figsize=(10, 5)) #todo тут поправить чтобы график на говно не был похож
+        fig = plt.figure(figsize=(10, 5))  # todo тут поправить чтобы график на говно не был похож
 
         # создаём область, в которой будет
         # - отображаться график
@@ -124,7 +126,7 @@ class CharacteristicFromExcel:
         fig.tight_layout()
         fig.savefig('funcs.png')
 
-    def get_diag(self, t,filename):
+    def get_diag(self, t, filename):
         labels = list(self.res.keys())
 
         t_110 = np.linspace(0, 1, 110)
@@ -136,9 +138,7 @@ class CharacteristicFromExcel:
 
         start_stats = [i[0] for i in self.res.values()]
         stats = [i[res_index] for i in self.res.values()]
-        make_radar_chart('T=' + str(t),filename, start_stats, stats, labels)
-
-
+        make_radar_chart('T=' + str(t), filename, start_stats, stats, labels)
 
 
 def make_radar_chart(name, filename, initialStats, stats, attribute_labels):
@@ -169,59 +169,60 @@ def Q_tempalte(t, k):
 
 
 def fak1(t):
-    return 2 * t + 0.1
+    return 0.5 * t + 0.1
 
 
 def fak2(t):
     res = np.where(t >= 0, 0.8, t)
     res = np.where(t > 0.25, 0.6, res)
-    res = np.where(t > 0.6, 0.4, res)
-    res = np.where(t > 0.8, 0.15, res)
+    res = np.where(t > 0.6, 0.33, res)
 
     return res
 
+
 def fak3(t):
-    return np.cos(t * 10) / 3 + 0.35
+    return np.cos(t * 10) / 3 + 0.5
+
 
 def fak4(t):
-    return  t / 3 + 0.3
+    return t / 3 + 0.3
+
 
 def fak5(t):
     return np.cos(t * 5) / 6 + 0.2
 
+
 def fak6(t):
     return np.exp(t) / 2 - 0.5
 
+
 def fak7(t):
-    res = np.where(t >= 0, 0.08, t)
-    res = np.where(t > 0.25, 0.17, res)
-    res = np.where(t > 0.45, 0.26, res)
-    res = np.where(t > 0.55, 0.38, res)
-    res = np.where(t > 0.70, 0.46, res)
+    res = np.where(t >= 0, 0.23, t)
+    res = np.where(t > 0.77, 0.34, res)
+    res = np.where(t > 0.82, 0.46, res)
 
     return res
+
 
 def fak8(t):
-    res = np.where(t >= 0, 0.05, t)
-    res = np.where(t > 0.15, 0.09, res)
-    res = np.where(t > 0.24, 0.15, res)
-    res = np.where(t > 0.60, 0.20, res)
+    res = np.where(t >= 0, 0.11, t)
+    res = np.where(t > 0.15, 0.42, res)
+    res = np.where(t > 0.43, 0.89, res)
 
     return res
+
 
 def fak9(t):
     res = np.where(t >= 0, 0.1, t)
-    res = np.where(t > 0.15, 0.2, res)
-    res = np.where(t > 0.2, 0.24, res)
-    res = np.where(t > 0.43, 0.3, res)
-    res = np.where(t > 0.58, 0.34, res)
-    res = np.where(t > 0.73, 0.39, res)
-    res = np.where(t > 0.94, 0.5, res)
+    res = np.where(t > 0.43, 0.35, res)
+    res = np.where(t > 0.77, 0.62, res)
 
     return res
 
+
 def fak10(t):
     return 1 / (t + 1) - 0.2
+
 
 excel_file_path = 'tableKush.xlsx'
 
@@ -255,6 +256,6 @@ def get_faks_image():
 
     plt.ylim([0, 1])
     plt.legend(['FaK1', 'FaK2', 'FaK3', 'FaK4', 'FaK5', 'FaK6', 'FaK7', 'FaK8', 'FaK9', 'Fak10'], bbox_to_anchor=(1, 1))
-    
+
     fig[0].tight_layout()
     fig[0].savefig('fak.png')
