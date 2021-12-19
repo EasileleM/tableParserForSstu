@@ -84,7 +84,7 @@ class CharacteristicFromExcel:
             res_d_fak = list(map(lambda x: faks[x], self.d_fak))
 
             return lambda y, t: 1 / max_val * (np.prod(list(map(lambda x: x(t), res_b_f))) * sum(
-                list(map(lambda x: x(t), res_b_fak))) - np.prod(list(map(lambda x: x(t), res_d_f))) * sum(
+                list(map(lambda x: x(t), res_b_fak))) + np.prod(list(map(lambda x: x(t), res_d_f))) * sum(
                 list(map(lambda x: x(t), res_d_fak))))
 
     def init_par(self, Q1, Q2, Q3, Q4, Q5, Q1k, Q2k, Q3k, Q4k, Q5k):
@@ -106,6 +106,26 @@ class CharacteristicFromExcel:
 
         return self.res
 
+    def break_line_label(self, label):
+        words = label.split(' ')
+
+        wasBreak = False
+        res = ''
+
+        if len(label) <= 35:
+            return label
+
+        for i in range(len(words)):
+            res += words[i] + ' '
+
+            print (res, words[i], len(res), (len(label) // 2), wasBreak)
+            if len(res) >= (len(label) // 2) and not wasBreak:
+                res += '\n'
+                wasBreak = True
+
+        return res
+
+
     def get_graphics(self):
         fig = plt.figure(figsize=(10, 5))  # todo тут поправить чтобы график на говно не был похож
 
@@ -116,12 +136,12 @@ class CharacteristicFromExcel:
         legend_labels = []
         for char in self.chars:
             plt.plot(t, self.res[char.label], linewidth=2)
-            legend_labels.append(char.label)
+            legend_labels.append(self.break_line_label(char.label.replace('\n', '')))
         plt.xlim([0, 1])
         plt.ylim([0, 1])
         plt.xlabel('время')
         plt.ylabel('значение характеристик')
-        plt.legend(legend_labels, bbox_to_anchor=(1, 1))
+        plt.legend(legend_labels, bbox_to_anchor=(1, 1), prop={'size': 7})
         plt.show()
         fig.tight_layout()
         fig.savefig('funcs.png')
@@ -169,59 +189,59 @@ def Q_tempalte(t, k):
 
 
 def fak1(t):
-    return 0.5 * t + 0.1
+    return 0.3 * t + 0.11
 
 
 def fak2(t):
-    res = np.where(t >= 0, 0.8, t)
-    res = np.where(t > 0.25, 0.6, res)
-    res = np.where(t > 0.6, 0.33, res)
+    res = np.where(t >= 0, 0.78, t)
+    res = np.where(t > 0.22, 0.4, res)
+    res = np.where(t > 0.64, 0.31, res)
 
     return res
 
 
 def fak3(t):
-    return np.cos(t * 10) / 3 + 0.5
+    return np.cos(t * 9) / 3 + 0.4
 
 
 def fak4(t):
-    return t / 3 + 0.3
+    return t / 3 + 0.29
 
 
 def fak5(t):
-    return np.cos(t * 5) / 6 + 0.2
+    return np.cos(t * 6) / 6 + 0.3
 
 
 def fak6(t):
-    return np.exp(t) / 2 - 0.5
+    return t
 
 
 def fak7(t):
-    res = np.where(t >= 0, 0.23, t)
-    res = np.where(t > 0.77, 0.34, res)
-    res = np.where(t > 0.82, 0.46, res)
+    res = np.where(t >= 0, 0.21, t)
+    res = np.where(t > 0.74, 0.32, res)
+    res = np.where(t > 0.84, 0.49, res)
 
     return res
 
 
 def fak8(t):
     res = np.where(t >= 0, 0.11, t)
-    res = np.where(t > 0.15, 0.42, res)
-    res = np.where(t > 0.43, 0.89, res)
+    res = np.where(t > 0.13, 0.46, res)
+    res = np.where(t > 0.65, 0.65, res)
 
     return res
 
 
 def fak9(t):
-    res = np.where(t >= 0, 0.1, t)
-    res = np.where(t > 0.43, 0.35, res)
-    res = np.where(t > 0.77, 0.62, res)
+    res = np.where(t >= 0, 0.12, t)
+    res = np.where(t > 0.42, 0.32, res)
+    res = np.where(t > 0.69, 0.57, res)
 
     return res
 
 
 def fak10(t):
-    return 1 / (t + 1) - 0.2
+    return t
 
 
 excel_file_path = 'tableKush.xlsx'
